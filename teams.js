@@ -1,4 +1,4 @@
-// teams.js — load team dropdown + players
+// teams.js — load teams + players via serverless API
 async function fetchJSON(url) {
   const r = await fetch(url);
   if (!r.ok) throw new Error('Network error');
@@ -22,7 +22,7 @@ async function loadTeamsDropdown() {
   }
 }
 
-// Load players for selected team
+// Load players for selected team using serverless API
 async function loadTeamPlayers() {
   const teamSelect = document.getElementById('teamSelect');
   const teamId = teamSelect.value;
@@ -35,7 +35,8 @@ async function loadTeamPlayers() {
   container.innerHTML = '<p class="small-muted">Loading players…</p>';
 
   try {
-    const data = await fetchJSON(`https://statsapi.mlb.com/api/v1/teams/${teamId}/roster`);
+    // Use serverless API route
+    const data = await fetchJSON(`/api/team/${teamId}`);
     const players = data.roster || [];
 
     if (!players.length) {
@@ -63,6 +64,7 @@ async function loadTeamPlayers() {
   }
 }
 
+// Event listeners
 document.addEventListener('DOMContentLoaded', () => {
   loadTeamsDropdown();
   const loadBtn = document.getElementById('loadTeamBtn');
