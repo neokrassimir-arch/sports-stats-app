@@ -70,3 +70,18 @@ function showGraph(){
   if (typeof renderPlayerChart === 'function') renderPlayerChart(id);
   else alert('Charts not loaded');
 }
+document.addEventListener('DOMContentLoaded', async ()=>{
+  const id = localStorage.getItem('bb_view');
+  if (id) {
+    // remove it so it won't repeat
+    localStorage.removeItem('bb_view');
+    // fetch player name and show
+    try {
+      const r = await fetch(`https://statsapi.mlb.com/api/v1/people/${id}`);
+      const j = await r.json();
+      const name = j.people?.[0]?.fullName || '';
+      document.getElementById('playerName').value = name;
+      searchPlayer();
+    } catch(e){}
+  }
+});
