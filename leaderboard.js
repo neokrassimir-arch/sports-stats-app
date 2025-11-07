@@ -1,4 +1,4 @@
-// leaderboard.js — upgraded: numeric-safe sorting, column sorting, headshots, pagination, click-to-open-player
+// leaderboard.js — upgraded: numeric-safe sorting, column sorting, headshots, pagination, clickable names
 const PAGE_SIZE = 10;
 let currentLeaders = [];
 let currentCategory = null;
@@ -79,13 +79,7 @@ function renderLeadersToDOM() {
   let html = '<table class="table">';
   html += buildTableHeader(currentCategory);
   slice.forEach((p, idx) => {
-    // headshot URL heuristic: mlb headshots follow pattern, but fallback to placeholder
-    // Many players have headshots available via: https://www.mlbstatic.com/team-logos/team-primary-on-dark/133.svg (team example)
-    // For players, MLB has images like: https://img.mlbstatic.com/mlb-photos/image/upload/w_225,h_225/ui/prod/players/xxx/headshot.jpg
-    // We'll use the 'person.id' to attempt a CDN pattern, with placeholder fallback.
-
     const playerId = p.person.id;
-    // placeholder small headshot fallback (data URI or network image)
     const headshot = `https://img.mlbstatic.com/mlb-photos/image/upload/w_200,h_200/mlb/people/${playerId}/headshot.jpg`;
     const displayValue = p.value ?? '-';
     html += `
@@ -93,7 +87,7 @@ function renderLeadersToDOM() {
         <td class="rank">${start + idx + 1}</td>
         <td class="player-cell">
           <img src="${headshot}" onerror="this.onerror=null;this.src='icons/player-placeholder.png';" class="headshot" />
-          <a href="index.html?playerId=${playerId}" class="player-link">${p.person.fullName}</a>
+          <a href="player.html?playerId=${playerId}" class="player-link">${p.person.fullName}</a>
         </td>
         <td class="value-cell">${displayValue}</td>
       </tr>
@@ -103,7 +97,6 @@ function renderLeadersToDOM() {
   html += renderPagination(currentLeaders.length);
   target.innerHTML = html;
 
-  // attach header click handlers
   attachColumnSortHandlers();
 }
 
@@ -130,10 +123,8 @@ async function loadLeaders(){
       return;
     }
 
-    // sanitize values and ensure numbers are sortable
     leaders = leaders.map(x => ({ ...x, _numeric: numeric(x.value) }));
 
-    // default sort according to stat category
     if (cat === 'era') {
       leaders.sort((a,b) => a._numeric - b._numeric);
       sortDesc = false;
