@@ -28,14 +28,14 @@
       <div class="controls flex gap-3 items-center mb-4">
         <select id="teamSelect" class="p-2 rounded bg-gray-700 text-white">
           <option value="">Select a team</option>
-          <!-- Teams will be dynamically loaded -->
+          <!-- Teams loaded dynamically -->
         </select>
         <button id="loadTeamBtn" class="btn-red">Load Team</button>
       </div>
 
       <!-- Player List -->
       <div id="teamPlayers" class="mt-4">
-        <p class="small-muted">Select a team and click "Load Team" to see players.</p>
+        <p class="small-muted">Select a team and click "Load Team" to see players and stats.</p>
       </div>
     </section>
   </main>
@@ -46,21 +46,37 @@
     </div>
   </footer>
 
-  <!-- Extra styling for players -->
   <style>
-    .team-player-list { list-style: none; padding: 0; }
-    .player-item img.headshot {
-      width: 44px;
-      height: 44px;
+    .player-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      background: rgba(255,255,255,0.03);
+      padding: 6px 12px;
       border-radius: 8px;
+    }
+    .player-card img {
+      width: 50px;
+      height: 50px;
       object-fit: cover;
+      border-radius: 8px;
     }
-    .player-link {
+    .player-info {
+      flex: 1;
+    }
+    .player-info a {
       color: #fff;
-      text-decoration: none;
       font-weight: 600;
+      text-decoration: none;
     }
-    .player-link:hover { color: #ff6b6b; text-decoration: underline; }
+    .player-info a:hover { color: #ff6b6b; text-decoration: underline; }
+    .player-stats {
+      display: flex;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: #bbb;
+    }
   </style>
 </body>
 </html>
