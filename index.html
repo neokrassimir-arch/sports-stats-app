@@ -2,13 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Baseball Stats — Home</title>
+  <title>Baseball Stats — Charts</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <link rel="manifest" href="manifest.json" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="styles.css" />
-  <script defer src="app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script defer src="charts.js"></script>
 </head>
 <body class="bg-espn-dark text-white">
@@ -16,42 +14,35 @@
     <div class="container flex-between">
       <h1 class="logo">⚾ Baseball Stats</h1>
       <nav class="nav">
-        <a href="index.html">Search</a>
+        <a href="index.html">Home</a>
         <a href="leaderboard.html">Leaderboards</a>
-        <a href="live.html">Live Scores</a>
         <a href="teams.html">Teams</a>
-        <a href="compare.html">Compare</a>
-        <a href="favorites.html">Favorites</a>
       </nav>
     </div>
   </header>
 
   <main class="container mt-8">
     <section class="card">
-      <h2 class="card-title">Search MLB Player</h2>
-      <div class="form-row">
-        <input id="playerName" placeholder="Type player name (e.g., Mike Trout)" />
-        <div class="btn-row">
-          <button id="searchBtn" class="btn-red" onclick="searchPlayer()">Search</button>
-          <button id="graphBtn" class="btn-dark" onclick="showGraph()">View OPS Trend</button>
-          <button id="saveBtn" class="btn-dark" onclick="saveFavorite()" title="Save to favorites">☆ Save</button>
-        </div>
+      <h2 class="card-title">Team Player Stats Charts</h2>
+
+      <div class="controls flex gap-3 items-center mb-4">
+        <select id="teamSelect" class="p-2 rounded bg-gray-700 text-white"></select>
+        <button id="loadChartsBtn" class="btn-red">Load Charts</button>
       </div>
-      <div id="results" class="mt-4"></div>
-      <div id="chartContainer" class="mt-6"></div>
+
+      <div class="charts-container mt-6">
+        <canvas id="avgChart" class="mb-6"></canvas>
+        <canvas id="opsChart" class="mb-6"></canvas>
+        <canvas id="hrChart" class="mb-6"></canvas>
+        <canvas id="rbiChart" class="mb-6"></canvas>
+      </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="container">Built with MLB Stats API • ESPN-style theme</div>
+  <footer class="footer mt-10">
+    <div class="container text-gray-400 text-sm">
+      Live-updated using MLB Stats API
+    </div>
   </footer>
-
-  <script>
-    // Basic service worker registration for PWA
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
-    }
-  </script>
 </body>
 </html>
-
