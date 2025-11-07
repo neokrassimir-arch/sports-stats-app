@@ -1,37 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Baseball Stats App</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- TailwindCSS CDN (free, no install) -->
+  <meta charset="utf-8" />
+  <title>Baseball Stats — Home</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="manifest" href="manifest.json" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-
+  <link rel="stylesheet" href="styles.css" />
   <script defer src="app.js"></script>
+  <script defer src="charts.js"></script>
 </head>
-<body class="bg-gray-100 text-gray-900">
+<body class="bg-espn-dark text-white">
+  <header class="site-header">
+    <div class="container flex-between">
+      <h1 class="logo">⚾ Baseball Stats</h1>
+      <nav class="nav">
+        <a href="index.html">Search</a>
+        <a href="leaderboard.html">Leaderboards</a>
+        <a href="live.html">Live Scores</a>
+        <a href="teams.html">Teams</a>
+        <a href="compare.html">Compare</a>
+        <a href="favorites.html">Favorites</a>
+      </nav>
+    </div>
+  </header>
 
-  <!-- Navigation -->
-  <nav class="bg-blue-700 p-4 text-white text-xl font-semibold flex justify-between">
-    <span>⚾ Baseball Stats App</span>
-    <a href="leaderboard.html" class="underline hover:text-gray-300">Leaderboards</a>
-  </nav>
+  <main class="container mt-8">
+    <section class="card">
+      <h2 class="card-title">Search MLB Player</h2>
+      <div class="form-row">
+        <input id="playerName" placeholder="Type player name (e.g., Mike Trout)" />
+        <div class="btn-row">
+          <button id="searchBtn" class="btn-red" onclick="searchPlayer()">Search</button>
+          <button id="graphBtn" class="btn-dark" onclick="showGraph()">View OPS Trend</button>
+          <button id="saveBtn" class="btn-dark" onclick="saveFavorite()" title="Save to favorites">☆ Save</button>
+        </div>
+      </div>
+      <div id="results" class="mt-4"></div>
+      <div id="chartContainer" class="mt-6"></div>
+    </section>
+  </main>
 
-  <div class="max-w-xl mx-auto mt-12 bg-white p-6 rounded-xl shadow-lg">
-    <h1 class="text-2xl font-bold mb-4">Search MLB Player</h1>
+  <footer class="footer">
+    <div class="container">Built with MLB Stats API • ESPN-style theme</div>
+  </footer>
 
-    <input id="playerName"
-           class="w-full p-3 border rounded-lg"
-           placeholder="Enter player name (e.g., Shohei Ohtani)" />
-
-    <button onclick="searchPlayer()"
-            class="w-full mt-4 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700">
-      Search
-    </button>
-
-    <div id="results" class="mt-6"></div>
-  </div>
+  <script>
+    // Basic service worker registration for PWA
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+    }
+  </script>
 </body>
 </html>
 
