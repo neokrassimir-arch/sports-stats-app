@@ -15,27 +15,26 @@
       <nav class="nav">
         <a href="index.html">Search</a>
         <a href="leaderboard.html">Leaderboards</a>
-        <a href="live.html">Live Scores</a>
         <a href="teams.html">Teams</a>
-        <a href="compare.html">Compare</a>
-        <a href="favorites.html">Favorites</a>
       </nav>
     </div>
   </header>
 
   <main class="container mt-8">
     <section class="card">
-      <h2 class="card-title">Team Rosters & Stats</h2>
-      <div class="controls">
-        <select id="teamSelect"></select>
-        <button class="btn-red" onclick="loadTeam()">Load Team</button>
+      <h2 class="card-title">MLB Teams</h2>
+      <div class="controls flex gap-3 items-center">
+        <select id="teamSelect" class="p-2 rounded bg-gray-700 text-white">
+          <option value="">Select a team</option>
+        </select>
+        <button id="loadTeamBtn" class="btn-red">Load Team</button>
       </div>
-      <div id="teamArea" class="mt-4"></div>
+      <div id="teamPlayers" class="mt-4"></div>
     </section>
   </main>
 
   <footer class="footer">
-    <div class="container">Roster data from MLB Stats API</div>
+    <div class="container">Live-updated using MLB Stats API</div>
   </footer>
 </body>
 </html>
