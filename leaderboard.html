@@ -1,24 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>MLB Leaderboards</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
+  <meta charset="utf-8" />
+  <title>Leaderboards — Baseball Stats</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css" />
   <script defer src="leaderboard.js"></script>
 </head>
-<body class="bg-gray-100 text-gray-900">
+<body class="bg-espn-dark text-white">
+  <header class="site-header">
+    <div class="container flex-between">
+      <h1 class="logo">⚾ Baseball Stats</h1>
+      <nav class="nav">
+        <a href="index.html">Search</a>
+        <a href="leaderboard.html">Leaderboards</a>
+        <a href="live.html">Live Scores</a>
+        <a href="teams.html">Teams</a>
+        <a href="compare.html">Compare</a>
+        <a href="favorites.html">Favorites</a>
+      </nav>
+    </div>
+  </header>
 
-  <nav class="bg-blue-700 p-4 text-white text-xl font-semibold flex justify-between">
-    <a href="index.html" class="hover:text-gray-300">← Back</a>
-    <span>MLB Leaderboards</span>
-  </nav>
+  <main class="container mt-8">
+    <section class="card">
+      <h2 class="card-title">Season Leaders</h2>
+      <div class="controls">
+        <select id="categorySelect" onchange="loadLeaders()">
+          <option value="ops">OPS (Hitting)</option>
+          <option value="homeRuns">Home Runs</option>
+          <option value="avg">Batting Average</option>
+          <option value="era">ERA (Pitching)</option>
+          <option value="wins">Wins</option>
+        </select>
+        <input id="seasonInput" placeholder="Season (e.g., 2024)" />
+        <button class="btn-red" onclick="loadLeaders()">Load</button>
+      </div>
+      <div id="leaderboard" class="mt-4"></div>
+    </section>
+  </main>
 
-  <div class="max-w-4xl mx-auto mt-12 bg-white p-6 rounded-xl shadow-lg">
-    <h1 class="text-2xl font-bold mb-4">2025 League Leaders</h1>
-    <table id="leaderboard" class="table-auto w-full text-left mt-3"></table>
-  </div>
-
+  <footer class="footer">
+    <div class="container">Live-updated using MLB Stats API</div>
+  </footer>
 </body>
 </html>
