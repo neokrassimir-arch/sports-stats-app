@@ -1,37 +1,52 @@
-// teams.js
-async function loadTeamsList(){
-  const sel = document.getElementById('teamSelect');
-  try {
-    const resp = await fetch('https://statsapi.mlb.com/api/v1/teams?sportId=1');
-    const data = await resp.json();
-    const teams = data.teams || [];
-    sel.innerHTML = teams.map(t=>`<option value="${t.id}">${t.name}</option>`).join('');
-  } catch(e){
-    sel.innerHTML = `<option value="">Error loading teams</option>`;
-  }
+// teams.js — load players when a team is selected
+async function fetchJSON(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error('Network error');
+  return r.json();
 }
 
-async function loadTeam(){
-  const id = document.getElementById('teamSelect').value;
-  const area = document.getElementById('teamArea');
-  if (!id) { area.innerHTML = `<p class="small-muted">Choose a team.</p>`; return; }
-  area.innerHTML = `<p class="small-muted">Loading roster...</p>`;
+async function loadTeamPlayers() {
+  const teamSelect = document.getElementById('teamSelect');
+  const teamId = teamSelect.value;
+  const container = document.getElementById('teamPlayers');
+  if (!teamId) {
+    container.innerHTML = '<p class="small-muted">Select a team first.</p>';
+    return;
+  }
+
+  container.innerHTML = '<p class="small-muted">Loading players…</p>';
+
   try {
-    const resp = await fetch(`https://statsapi.mlb.com/api/v1/teams/${id}?expand=team.roster`);
-    const data = await resp.json();
-    const team = data.teams?.[0];
-    const roster = team.roster?.roster || [];
-    let html = `<h3 style="margin-bottom:8px">${team.name} — Roster</h3>`;
-    html += `<table class="table"><tr><th>#</th><th>Player</th><th>Position</th></tr>`;
-    roster.forEach(p=>{
-      html += `<tr><td>${p.jerseyNumber||''}</td><td>${p.person.fullName}</td><td>${p.position?.abbreviation||''}</td></tr>`;
+    const data = await fetchJSON(`https://statsapi.mlb.com/api/v1/teams/${teamId}/roster`);
+    const players = data.roster || [];
+
+    if (!players.length) {
+      container.innerHTML = '<p class="small-muted">No players found for this team.</p>';
+      return;
+    }
+
+    let html = '<ul class="team-player-list">';
+    players.forEach(player => {
+      const p = player.person;
+      const headshot = `https://img.mlbstatic.com/mlb-photos/image/upload/w_100,h_100/mlb/people/${p.id}/headshot.jpg`;
+      html += `
+        <li class="player-item">
+          <img src="${headshot}" onerror="this.onerror=null;this.src='icons/player-placeholder.png';" class="headshot" />
+          <a href="player.html?playerId=${p.id}" class="player-link">${p.fullName}</a>
+        </li>
+      `;
     });
-    html += '</table>';
-    area.innerHTML = html;
-  } catch(e){
-    console.error(e);
-    area.innerHTML = `<p class="small-muted">Failed to load team roster.</p>`;
+    html += '</ul>';
+
+    container.innerHTML = html;
+
+  } catch (err) {
+    console.error(err);
+    container.innerHTML = '<p class="small-muted">Failed to load players.</p>';
   }
 }
 
-loadTeamsList();
+document.addEventListener('DOMContentLoaded', () => {
+  const loadBtn = document.getElementById('loadTeamBtn');
+  if (loadBtn) loadBtn.addEventListener('click', loadTeamPlayers);
+});
