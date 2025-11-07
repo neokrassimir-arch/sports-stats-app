@@ -17,22 +17,23 @@ async function loadLeaders() {
       return;
     }
 
-    // ✅ CONVERT VALUE TO NUMBER AND FORCE DESCENDING SORT
     function numeric(val) {
       return Number(String(val).replace(/[^0-9.]/g, ""));
     }
 
-    leaders.sort((a, b) => numeric(b.value) - numeric(a.value));
-
-    console.log("Sorted (DESC):", leaders.map(p => p.value)); // Debugging
+    if (cat === "era") {
+      leaders.sort((a, b) => numeric(a.value) - numeric(b.value)); // ERA ASCENDING
+    } else {
+      leaders.sort((a, b) => numeric(b.value) - numeric(a.value)); // EVERY OTHER DESCENDING
+    }
 
     let html = `
       <table class="table">
-      <tr>
-        <th>Rank</th>
-        <th>Player</th>
-        <th>${cat.toUpperCase()}</th>
-      </tr>
+        <tr>
+          <th>Rank</th>
+          <th>Player</th>
+          <th>${cat.toUpperCase()}</th>
+        </tr>
     `;
 
     leaders.forEach((p, i) => {
@@ -41,7 +42,8 @@ async function loadLeaders() {
           <td>${i + 1}</td>
           <td>${p.person.fullName}</td>
           <td>${p.value}</td>
-        </tr>`;
+        </tr>
+      `;
     });
 
     html += `</table>`;
@@ -53,5 +55,4 @@ async function loadLeaders() {
   }
 }
 
-// Run on first load
 document.addEventListener("DOMContentLoaded", loadLeaders);
