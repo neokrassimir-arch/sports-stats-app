@@ -1,14 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Baseball Stats App</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- TailwindCSS CDN (free, no install) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
   <script defer src="app.js"></script>
 </head>
-<body style="font-family: Arial; margin: 40px;">
-  <h1>⚾ Baseball Stats Lookup</h1>
-  <input id="playerName" placeholder="Enter MLB player name" />
-  <button onclick="searchPlayer()">Search</button>
-  <div id="results"></div>
+<body class="bg-gray-100 text-gray-900">
+
+  <!-- Navigation -->
+  <nav class="bg-blue-700 p-4 text-white text-xl font-semibold flex justify-between">
+    <span>⚾ Baseball Stats App</span>
+    <a href="leaderboard.html" class="underline hover:text-gray-300">Leaderboards</a>
+  </nav>
+
+  <div class="max-w-xl mx-auto mt-12 bg-white p-6 rounded-xl shadow-lg">
+    <h1 class="text-2xl font-bold mb-4">Search MLB Player</h1>
+
+    <input id="playerName"
+           class="w-full p-3 border rounded-lg"
+           placeholder="Enter player name (e.g., Shohei Ohtani)" />
+
+    <button onclick="searchPlayer()"
+            class="w-full mt-4 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700">
+      Search
+    </button>
+
+    <div id="results" class="mt-6"></div>
+  </div>
 </body>
 </html>
+
