@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Teams — Baseball Stats</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="teams.js"></script>
+</head>
+<body class="bg-espn-dark text-white">
+  <header class="site-header">
+    <div class="container flex-between">
+      <h1 class="logo">⚾ Baseball Stats</h1>
+      <nav class="nav">
+        <a href="index.html">Search</a>
+        <a href="leaderboard.html">Leaderboards</a>
+        <a href="live.html">Live Scores</a>
+        <a href="teams.html">Teams</a>
+        <a href="compare.html">Compare</a>
+        <a href="favorites.html">Favorites</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container mt-8">
+    <section class="card">
+      <h2 class="card-title">Team Rosters & Stats</h2>
+      <div class="controls">
+        <select id="teamSelect"></select>
+        <button class="btn-red" onclick="loadTeam()">Load Team</button>
+      </div>
+      <div id="teamArea" class="mt-4"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">Roster data from MLB Stats API</div>
+  </footer>
+</body>
+</html>
