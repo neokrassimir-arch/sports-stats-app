@@ -23,18 +23,44 @@
   <main class="container mt-8">
     <section class="card">
       <h2 class="card-title">MLB Teams</h2>
-      <div class="controls flex gap-3 items-center">
+      
+      <!-- Controls -->
+      <div class="controls flex gap-3 items-center mb-4">
         <select id="teamSelect" class="p-2 rounded bg-gray-700 text-white">
           <option value="">Select a team</option>
+          <!-- Teams will be dynamically loaded -->
         </select>
         <button id="loadTeamBtn" class="btn-red">Load Team</button>
       </div>
-      <div id="teamPlayers" class="mt-4"></div>
+
+      <!-- Player List -->
+      <div id="teamPlayers" class="mt-4">
+        <p class="small-muted">Select a team and click "Load Team" to see players.</p>
+      </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="container">Live-updated using MLB Stats API</div>
+  <footer class="footer mt-10">
+    <div class="container text-gray-400 text-sm">
+      Live-updated using MLB Stats API
+    </div>
   </footer>
+
+  <!-- Extra styling for players -->
+  <style>
+    .team-player-list { list-style: none; padding: 0; }
+    .player-item img.headshot {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+    .player-link {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .player-link:hover { color: #ff6b6b; text-decoration: underline; }
+  </style>
 </body>
 </html>
